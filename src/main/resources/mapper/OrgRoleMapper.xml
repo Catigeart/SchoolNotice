@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.catigeart.notice.mapper.OrgRoleMapper">
+    <select id="findByUser" parameterType="pers.catigeart.notice.entity.User"
+            resultType="pers.catigeart.notice.entity.OrgRole">
+        select * from org_role where id in (
+            select org_role_id from user_org_role where username = #{username}
+            )
+    </select>
+
+    <select id="findByUsernameAndOrgRoleName" parameterType="string"
+            resultType="pers.catigeart.notice.entity.OrgRole">
+        select * from org_role where role_name = #{orgRoleName} and id = (
+            select org_role_id from user_org_role where username = #{username}
+            )
+    </select>
+
+    <select id="findByUsernameAndOrgId" resultType="pers.catigeart.notice.entity.OrgRole">
+        select * from org_role where org_id = #{orgId} and id in (
+            select org_role_id from user_org_role where username = #{username}
+            )
+    </select>
+
+    <update id="insertAndGetId" parameterType="pers.catigeart.notice.entity.OrgRole"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into org_role (role_name, org_id)
+        value (#{roleName}, #{orgId})
+    </update>
+</mapper>

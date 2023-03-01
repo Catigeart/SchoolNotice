@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.catigeart.notice.mapper.UserOrgRoleMapper">
+
+    <select id="findByOrgRole" resultType="pers.catigeart.notice.entity.UserOrgRole" parameterType="list">
+        select * from user_org_role
+        <where>
+            org_role_id in
+            <foreach item="org_role" collection="list" separator="," open="(" close=")" index="">
+                #{org_role.id}
+            </foreach>
+        </where>
+    </select>
+
+    <select id="findByUsernameAndOrgId" resultType="pers.catigeart.notice.entity.UserOrgRole">
+        select * from user_org_role where username=#{username} and org_role_id in (
+            select id from org_role where org_id = #{orgId}
+            )
+    </select>
+
+    <select id="findByOrg" parameterType="pers.catigeart.notice.entity.Org"
+            resultType="pers.catigeart.notice.entity.UserOrgRole">
+        select * from user_org_role where org_role_id in  (
+            select id from org_role where org_id = #{id}
+            )
+    </select>
+</mapper>

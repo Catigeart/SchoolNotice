@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.catigeart.notice.mapper.PersMsgMapper">
+    <select id="findByAllReceiver" resultType="pers.catigeart.notice.entity.PersMsg">
+        select * from pers_msg where
+<foreach collection="ukrList" item="ukr" open="(" separator="or" close=")">
+    (receive_group_id=#{klassId} and receive_role_id=#{id})
+</foreach>
+union
+select * from pers_msg where
+<foreach collection="orList" item="or" open="(" separator="or" close=")">
+    (receive_group_id=#{orgId} and receive_role_id=#{id})
+</foreach>
+union
+    select * from pers_msg where pers_msg.receive_username=#{username}
+    </select>
+</mapper>

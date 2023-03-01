@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.catigeart.notice.mapper.NoticeMapper">
+    <select id="findByOrg" resultType="pers.catigeart.notice.entity.Notice"
+            parameterType="pers.catigeart.notice.entity.Org">
+        select * from notice where org_role_id in (
+            select id from org_role where org_id = #{id}
+            )
+    </select>
+
+    <select id="findByKlass" resultType="pers.catigeart.notice.entity.Notice"
+            parameterType="pers.catigeart.notice.entity.Klass">
+        select * from notice where id in (
+            select notice_id from klass_notice where klass_id = #{id}
+        )
+    </select>
+
+    <insert id="saveAndGetId" parameterType="pers.catigeart.notice.entity.Notice" useGeneratedKeys="true" keyProperty="id">
+        insert into
+            notice (notice_name, notice_type, content, org_role_id, klass_role_name, begin_time, end_time, is_need_reply)
+            values (#{noticeName}, #{noticeType}, #{content}, #{orgRoleId}, #{klassRoleName}, #{beginTime}, #{endTime}, #{isNeedReply})
+    </insert>
+</mapper>

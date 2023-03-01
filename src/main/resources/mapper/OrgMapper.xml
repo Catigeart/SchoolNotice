@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.catigeart.notice.mapper.OrgMapper">
+    <select id="findByUser" parameterType="pers.catigeart.notice.entity.User"
+            resultType="pers.catigeart.notice.entity.Org">
+        select * from org where id in (
+            select org_id from org_role where id in (
+                select org_role_id from user_org_role where username = #{username}
+                )
+            )
+    </select>
+</mapper>

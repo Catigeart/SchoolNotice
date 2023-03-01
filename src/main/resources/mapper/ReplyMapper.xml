@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.catigeart.notice.mapper.ReplyMapper">
+    <select id="findByKlassIdAndNoticeId" resultType="pers.catigeart.notice.entity.Reply">
+        select * from reply where notice_id = #{noticeId} and username in (
+            select username from user where klass_id = #{klassId}
+            )
+    </select>
+</mapper>
