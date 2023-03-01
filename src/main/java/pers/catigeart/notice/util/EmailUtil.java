@@ -17,10 +17,10 @@ import javax.mail.internet.MimeMessage;
  * Time: 2022/5/22 4:59
  */
 public class EmailUtil {
-    private static final String myEmailAccount = "catigeart@qq.com";
-    private static final String myEmailPassword = "bvfjemolztnlfbia";
+    private static final String myEmailAccount = "***@qq.com";
+    private static final String myEmailPassword = "***";
     private static final String myEmailSMTPHost = "smtp.qq.com";
-    private static final String receiveMailAccount = "8102180511@csu.edu.cn";
+    private static final String receiveMailAccount = "***";
 
 
 
